@@ -167,7 +167,8 @@ ping 192.168.33.11
 ping 192.168.33.12
 ```
 
-16. 
+**or**
+
 ```bash
 ansible all -m ping
 ```
@@ -190,6 +191,8 @@ $ sudo nano hosts
 #192.168.33.12 ansible_connection=ssh ansible_ssh_user=vagrant ansible_ssh_pass=vagrant
 ```
 
+AWS is commented out because we are using the VM as the controller through which we `SSH`
+
 19. Exit and SSH into the web and db VMs
 ```bash
 sudo su 
@@ -201,7 +204,7 @@ sudo apt-get update
 exit
 ```
 
-20. `ansible all -m ping` which should return:
+20. `ansible all -m ping` **which should return**:
 ```bash
 root@aws:/etc/ansible# ansible all -m ping
 [DEPRECATION WARNING]: Distribution Ubuntu 18.04 on host 192.168.33.11 should use /usr/bin/python3, but is using /usr/bin/python for backward compatibility with
