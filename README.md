@@ -30,7 +30,7 @@
 - **Provisioning**: Set up various servers (e.g Nginx web server) you need in your infrastructure
 - **Configuration management**: Changes the configuration of an application, OS, or device; start and stop services; install or update applications; implement a security policy; or perform a wide variety of other configuration tasks.
 - **Application deployment**: Make **DevOps** easier by automating the deployment of internally developed applications to your production systems.
-- **Security and Compliance**:
+
 
 > Extracted from [edureka](https://www.edureka.co/blog/what-is-ansible/)
 
@@ -328,6 +328,8 @@ $ ansible db -m shell -a "hostname -I"
 - Playbooks manage configurations of and deployments to remote machines.
 - At more advanced level, they can sequence multi-tier rollouts involving rolling updates, and can delegrate actions to other hosts, interacting with monitoring servers and load balancers along the way. 
 - They can launch tasks synchronously or asynchronously
+
+:exclamation: **Note** INDENTATION IS IMPORTANT WHEN USING YAML :exclamation:
 
 ## Creating a playbook that installs nginx
 ```yaml
