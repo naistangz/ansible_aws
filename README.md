@@ -12,6 +12,9 @@
 - [x] [Terraform](#infrastructure-as-code-tools)
 - [x] [How does Ansible fit into DevOps](#-how-does-ansible-fit-into-devops)
 - [x] [Best practices of IaC](#best-practices-of-iac)
+- [x] [Setting up Ansible](#steps-in-terminal)
+- [x] [Ansible Ad-Hoc Commands](#ansible-ad-hoc-commands)
+- [x] [Ansible Playbooks](#ansible-playbooks)
 
 ## What is Ansible?
 - Ansible is an open-source, configuration management tool to **provision IT environments**, **deploy software** or be integrated to **CI/CD** pipelines.
@@ -229,4 +232,133 @@ Deprecation warnings can be disabled by setting deprecation_warnings=False in an
     "changed": false, 
     "ping": "pong"
 }
+```
+
+## Ansible Ad-Hoc Commands
+- Ad hoc commands are commands which can be run individually to perform quick functions
+- Ad hoc tasks can be used to reboot servers, copy files, manage packages and user.
+
+1. ansible web -a "date"
+```bash
+192.168.33.10 | CHANGED | rc=0 >>
+Mon Aug 17 14:33:53 UTC 2020
+```
+
+2. ansible db -a 'uname -a'
+```bash
+192.168.33.11 | CHANGED | rc=0 >>
+Linux db 4.15.0-112-generic #113-Ubuntu SMP Thu Jul 9 23:41:39 UTC 2020 x86_64 x86_64 x86_64 GNU/Linux
+```
+
+3. ansible all -m shell -a 'ls -a'
+```bash
+192.168.33.11 | CHANGED | rc=0 >>
+.
+..
+.ansible
+.bash_history
+.bash_logout
+.bashrc
+.cache
+.gnupg
+.profile
+.ssh
+.sudo_as_admin_successful
+.vbox_version
+.wget-hsts
+
+192.168.33.10 | CHANGED | rc=0 >>
+.
+..
+.ansible
+.bash_history
+.bash_logout
+.bashrc
+.cache
+.gnupg
+.profile
+.ssh
+.sudo_as_admin_successful
+.vbox_version
+.wget-hsts
+```
+
+4. **File Transfer**: You can use the Ad-hoc commands for doing `SCP` (Secure Copy Protocol) lots of files in parallel on multiple manchines
+```bash
+$ Ansible abc -m copy -a "src = /etc/file.conf dest = /tmp/file.conf"
+```
+
+5. Gathering adhoc information of all your facts about the hosts
+```bash
+$ Ansible all -m setup
+```
+
+6. **Rebooting servers**: You can use an ad-hoc task to call the command module and reboot all web servers in a city, 10 at time. Before Ansible, you had to have all your servers listed in a group called [city] in your inventory and have working SSH credentials for each machine in that group:
+```bash
+ansible london -a "/sbins/reboot"
+```
+
+7. **Finding out available disk space**
+```bash
+ansible all -a 'df -h'
+```
+
+8. Find out **env variables**
+```bash
+ansible all -a 'env'
+```
+
+9. Find **IP addresse**:
+```bash
+ansible all -m shell -a 'ip addr"
+or 
+$ ifconfig
+# getting only public and private IP
+$ ansible db -m shell -a "hostname -I"
+```
+
+> List of `ad-hoc commands` [here](https://devopsideas.com/ansible-ad-hoc-commands-usage/)
+
+## Ansible Playbooks
+- Units of scripts and define work for a server configuration managed by Ansible
+- Ansible is a configuration management tool that automates configuration of multiple servers through Ansible playbooks.
+- Playbooks are core components of any Ansible configuration (and other DevOps tools)
+- Ansible playbooks contain one or multiple plays, each of which define the work to be done for a configuration on a managed server.
+- Written in YAML (yet another mark up language)
+- Playbooks manage configurations of and deployments to remote machines.
+- At more advanced level, they can sequence multi-tier rollouts involving rolling updates, and can delegrate actions to other hosts, interacting with monitoring servers and load balancers along the way. 
+- They can launch tasks synchronously or asynchronously
+
+## Creating a playbook that installs nginx
+```yaml
+# Using three dashes to write YAML playbooks 
+---
+
+# Location of where nginx will be installed
+- hosts: web
+
+# Get the facts
+  gather_facts: yes
+
+# Work from root user equivalent to sudo su
+  become: true
+
+# What do we want ansible to do for us in this playbook?
+  tasks:
+  - name: Install nginx
+
+# Installing nginx and the declaring the state - the available states are: present/absent/ 
+    apt: pkg=nginx state=present
+
+# Command to run ansible playbook: ansible-playbook install_nginx_on_web.yml
+```
+
+**Run the playbook:**
+```bash
+root@aws:/etc/ansible# ansible-playbook installing_nginx_on_web.yml
+```
+
+**Enter IP into the browser to check if Nginx has been installed properly:**
+```bash
+192.168.33.10
 ```
