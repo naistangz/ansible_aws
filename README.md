@@ -29,7 +29,7 @@
 - **Application deployment**: Make **DevOps** easier by automating the deployment of internally developed applications to your production systems.
 - **Security and Compliance**:
 
-https://www.edureka.co/blog/what-is-ansible/
+> Extracted from [edureka](https://www.edureka.co/blog/what-is-ansible/)
 
 ## Why Ansible?
 - Simplicity 
@@ -161,7 +161,7 @@ $ tree
 $ ansible web -m ping
 ```
 
-15. The pring utility uses the echo request, and echoes reply messages within the Internet Control Message Protocol (ICMP)
+15. The ping utility uses the echo request, and echoes reply messages within the Internet Control Message Protocol (ICMP)
 ```bash
 ping 192.168.33.11
 ping 192.168.33.12
