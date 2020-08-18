@@ -74,7 +74,48 @@ pm2 killall
 
 ## Next iteration
 1. Copy app folder without using `scp` and including it in the `.yaml` file.
-2. Instead of using `sudo` command, use `become`. For example:
+2. Instead of using `sudo` command, use `become` when installing `nginx`. For example:
 ```yaml
-become: true
+---
+- name: Install NGINX 
+  become: yes
+  apt: 
+    name: nginx
+    state: present
+
+- name: Unlinking NGINX Default file
+  become: yes
+  command:
+    cmd: unlink /etc/nginx/sites-enabled/default
+
+- name: Create an NGINX Conf File
+  become: yes
+  file:
+    path: /etc/nginx/sites-available/reverse_proxy.conf
+    state: touch
+
+- name: Amending NGINX Conf File
+  become: yes
+  blockinfile:
+    path: /etc/nginx/sites-available/reverse_proxy.conf
+    marker: ""
+    block: |
+      server {
+          listen 80;
+          location / {
+              proxy_pass http://127.0.0.1:3000;
+                  }
+              }
+
+- name: Link NGINX Reverse Proxy
+  become: yes
+  command:
+    cmd: ls -s /etc/nginx/sites-available/reverse_proxy.conf /etc/nginx/sites-enabled/reverse_proxy.conf
+
+- name: Making Sure NGINX Service is Running
+  become: yes
+  service:
+    name: nginx
+    state: restarted
+    enabled: yes
 ```
