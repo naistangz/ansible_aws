@@ -43,7 +43,13 @@ sudo su
 ansible-playbook playbook.yml
 ```
 
-9. Navigate to your app folder and run the app
+Open the browser and type in the following IP address:
+```bash
+192.168.33.10
+```
+
+9. Navigate to your app folder and run the app\
+**[This step is unnecessary as these steps have been automated]**
 ```bash
 cd /home/vagrant/app/
 pm2 start app.js
