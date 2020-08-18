@@ -7,7 +7,10 @@ nano playbook.yml
 
 2. Set out [commands](playbook.yml) to install dependencies such as nodejs and nginx 
 
-3. Securely transfer the `playbook.yml` and the sample app folder to the AWS VM `192.168.33.12`: \ **[This can be further automated in `.yml` file]**
+3. Securely transfer the `playbook.yml` and the sample app folder to the AWS VM `192.168.33.12`:
+
+**[This can be further automated in `.yml` file]**
+
 ```bash
 scp -r app/ vagrant@192.168.33.10
 scp playbook.yml vagrant@192.168.33.12
