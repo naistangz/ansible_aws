@@ -82,7 +82,6 @@
     shell: |
       cd app/
       npm install
-      node seeds/seed.js
       pm2 kill
       pm2 start app.js
     environment:

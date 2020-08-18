@@ -236,6 +236,25 @@ Deprecation warnings can be disabled by setting deprecation_warnings=False in an
 }
 ```
 
+## Trouble shooting
+
+**Note**: if you come across Host key checking enabled problem:
+```bash
+vagrant@aws:/etc/ansible$ ansible all -m ping
+192.168.33.10 | FAILED! => {
+    "msg": "Using a SSH password instead of a key is not possible because Host Key checking is enabled and sshpass does not support this.  Please add this host's fingerprint to your known_hosts file to manage this host."
+}
+192.168.33.11 | FAILED! => {
+    "msg": "Using a SSH password instead of a key is not possible because Host Key checking is enabled and sshpass does not support this.  Please add this host's fingerprint to your known_hosts file to manage this host."
+}
+```
+
+Navigate to `ansible.cfg` in the ansible folder and type in the following below defaults:
+```bash
+[defaults]
+host_key_checking=False
+```
+
 ## Ansible Ad-Hoc Commands
 - Ad hoc commands are commands which can be run individually to perform quick functions
 - Ad hoc tasks can be used to reboot servers, copy files, manage packages and user.
