@@ -60,3 +60,8 @@ sudo killall -HUP mDNSResponder
 or 
 pm2 killall
 ```
+---
+
+
+## Next iteration
+1. Copy app folder without using `scp` and including it in the `.yaml` file

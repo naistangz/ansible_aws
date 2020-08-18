@@ -16,6 +16,8 @@
 - [x] [Ansible Ad-Hoc Commands](#ansible-ad-hoc-commands)
 - [x] [Ansible Playbooks](#ansible-playbooks)
 
+> Click [here](setup_app.md) to run app and installing dependencies using an ansible playbook
+
 ## What is Ansible?
 - Ansible is an open-source, configuration management tool to **provision IT environments**, **deploy software** or be integrated to **CI/CD** pipelines.
 - Ansible helps improve the scalability, consistency and reliability of your IT environment
@@ -364,3 +366,6 @@ root@aws:/etc/ansible# ansible-playbook installing_nginx_on_web.yml
 ```bash
 192.168.33.10
 ```
+
+
+> Click [here](setup_app.md) to run app and installing dependencies using an ansible playbook
