@@ -1,11 +1,14 @@
 # Creating a playbook and syncing our app to the VM
 
-1. Create a `.yaml`/`.yml` file:
+1. Navigate to the `ansible_demo` folder and create a `.yaml`/`.yml` file:
 ```bash
 nano app.yml
 ```
 
-2. Set out [commands](playbook.yml) to install dependencies such as nodejs and nginx 
+2. Set out [commands](playbook.yml) to install dependencies such as nodejs and nginx then run the provision.sh file:
+```bash
+./provision.sh
+```
 
 3. Securely transfer the `app.yml` and the sample app folder to the AWS VM `192.168.33.12`:
 
@@ -16,8 +19,9 @@ scp -r app/ vagrant@192.168.33.10 = Web IP
 scp app.yml vagrant@192.168.33.12 = AWS IP
 ```
 
-4. Vagrant ssh into your `aws`VM as we will be using our AWS VM as the controller
+4. Vagrant up into your VMs and `SSH` into your `aws`VM as we will be using our AWS VM as the controller
 ```bash
+vagrant up
 vagrant ssh aws
 ```
 
