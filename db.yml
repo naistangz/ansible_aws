@@ -41,3 +41,15 @@
         net:
           port: 27017
           bindIp: 0.0.0.0
+
+  - name: Restart mongodb
+      become: true
+      shell: systemctl restart mongodb
+
+  - name: Enabling mongodb
+    become: true
+    shell: systemctl enable mongodb
+
+  - name: Starting Mongodb
+    become: true
+    shell: systemctl start mongodb

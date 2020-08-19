@@ -1,0 +1,385 @@
+Last login: Wed Aug 19 12:29:44 on ttys001
+➜  ansible_demo git:(master) ✗ vagrant ssh aws
+Welcome to Ubuntu 18.04.5 LTS (GNU/Linux 4.15.0-112-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+  System information as of Wed Aug 19 11:56:43 UTC 2020
+
+  System load:  0.0               Processes:           95
+  Usage of /:   2.7% of 61.80GB   Users logged in:     1
+  Memory usage: 16%               IP address for eth0: 10.0.2.15
+  Swap usage:   0%                IP address for eth1: 192.168.33.12
+
+ * Are you ready for Kubernetes 1.19? It's nearly here! Try RC3 with
+   sudo snap install microk8s --channel=1.19/candidate --classic
+
+   https://microk8s.io/ has docs and details.
+
+0 packages can be updated.
+0 updates are security updates.
+
+
+
+This system is built by the Bento project by Chef Software
+More information can be found at https://github.com/chef/bento
+Last login: Wed Aug 19 11:10:19 2020 from 10.0.2.2
+vagrant@aws:~$ cd /etc/ansible/
+vagrant@aws:/etc/ansible$ ls
+ansible.cfg  app.yml  db.yml  hosts  roles
+vagrant@aws:/etc/ansible$ ansible-playbook app.yml
+
+PLAY [web] *****************************************************************************************
+
+TASK [Gathering Facts] *****************************************************************************
+[DEPRECATION WARNING]: Distribution Ubuntu 18.04 on host 192.168.33.10 should use /usr/bin/python3,
+ but is using /usr/bin/python for backward compatibility with prior Ansible releases. A future
+Ansible release will default to using the discovered platform python for this host. See
+https://docs.ansible.com/ansible/2.9/reference_appendices/interpreter_discovery.html for more
+information. This feature will be removed in version 2.12. Deprecation warnings can be disabled by
+setting deprecation_warnings=False in ansible.cfg.
+ok: [192.168.33.10]
+
+TASK [Install nginx] *******************************************************************************
+ok: [192.168.33.10]
+
+TASK [nginx reverse proxy] *************************************************************************
+[WARNING]: Consider using 'become', 'become_method', and 'become_user' rather than running sudo
+changed: [192.168.33.10]
+
+TASK [Install nodejs] ******************************************************************************
+ok: [192.168.33.10]
+
+TASK [Install NPM] *********************************************************************************
+ok: [192.168.33.10]
+
+TASK [Install NPM modules] *************************************************************************
+changed: [192.168.33.10]
+
+TASK [Install pm2] *********************************************************************************
+ok: [192.168.33.10]
+
+TASK [set up app] **********************************************************************************
+changed: [192.168.33.10]
+
+PLAY RECAP *****************************************************************************************
+192.168.33.10              : ok=8    changed=3    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+
+vagrant@aws:/etc/ansible$ ls
+ansible.cfg  app.yml  db.yml  hosts  roles
+vagrant@aws:/etc/ansible$ ansible-playbook db.yml
+
+PLAY [db] ******************************************************************************************
+
+TASK [Gathering Facts] *****************************************************************************
+[DEPRECATION WARNING]: Distribution Ubuntu 18.04 on host 192.168.33.11 should use /usr/bin/python3,
+ but is using /usr/bin/python for backward compatibility with prior Ansible releases. A future
+Ansible release will default to using the discovered platform python for this host. See
+https://docs.ansible.com/ansible/2.9/reference_appendices/interpreter_discovery.html for more
+information. This feature will be removed in version 2.12. Deprecation warnings can be disabled by
+setting deprecation_warnings=False in ansible.cfg.
+ok: [192.168.33.11]
+
+TASK [install mongodb] *****************************************************************************
+ok: [192.168.33.11]
+
+TASK [Remove mongodb file (delete file)] ***********************************************************
+changed: [192.168.33.11]
+
+TASK [Touch a file, using symbolic modes to set the permissions (equivalent to 0644)] **************
+changed: [192.168.33.11]
+
+TASK [Insert multiple lines and Backup] ************************************************************
+changed: [192.168.33.11]
+
+PLAY RECAP *****************************************************************************************
+192.168.33.11              : ok=5    changed=3    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+
+vagrant@aws:/etc/ansible$ ansible-playbook app.yml
+
+PLAY [web] *****************************************************************************************
+
+TASK [Gathering Facts] *****************************************************************************
+[DEPRECATION WARNING]: Distribution Ubuntu 18.04 on host 192.168.33.10 should use /usr/bin/python3,
+ but is using /usr/bin/python for backward compatibility with prior Ansible releases. A future
+Ansible release will default to using the discovered platform python for this host. See
+https://docs.ansible.com/ansible/2.9/reference_appendices/interpreter_discovery.html for more
+information. This feature will be removed in version 2.12. Deprecation warnings can be disabled by
+setting deprecation_warnings=False in ansible.cfg.
+ok: [192.168.33.10]
+
+TASK [Install nginx] *******************************************************************************
+ok: [192.168.33.10]
+
+TASK [nginx reverse proxy] *************************************************************************
+[WARNING]: Consider using 'become', 'become_method', and 'become_user' rather than running sudo
+changed: [192.168.33.10]
+
+TASK [Install nodejs] ******************************************************************************
+ok: [192.168.33.10]
+
+TASK [Install NPM] *********************************************************************************
+ok: [192.168.33.10]
+
+TASK [Install NPM modules] *************************************************************************
+changed: [192.168.33.10]
+
+TASK [Install pm2] *********************************************************************************
+ok: [192.168.33.10]
+
+TASK [set up app] **********************************************************************************
+changed: [192.168.33.10]
+
+PLAY RECAP *****************************************************************************************
+192.168.33.10              : ok=8    changed=3    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+
+vagrant@aws:/etc/ansible$ cd ..
+vagrant@aws:/etc$ ls
+acpi                           group            mailcap.order        resolv.conf
+adduser.conf                   group-           mailname             rmt
+alternatives                   grub.d           manpath.config       rpc
+ansible                        gshadow          mdadm                rsyslog.conf
+apm                            gshadow-         mime.types           rsyslog.d
+apparmor                       gss              mke2fs.conf          samba
+apparmor.d                     hdparm.conf      modprobe.d           screenrc
+apport                         host.conf        modules              securetty
+apt                            hostname         modules-load.d       security
+at.deny                        hosts            mtab                 selinux
+bash.bashrc                    hosts.allow      nanorc               services
+bash_completion.d              hosts.deny       netconfig            shadow
+bindresvport.blacklist         idmapd.conf      netplan              shadow-
+binfmt.d                       init             network              shells
+byobu                          init.d           networkd-dispatcher  skel
+ca-certificates                initramfs-tools  networks             sos.conf
+ca-certificates.conf           inputrc          newt                 ssh
+ca-certificates.conf.dpkg-old  insserv.conf.d   nsswitch.conf        ssl
+calendar                       iproute2         opt                  subgid
+cifs-utils                     iscsi            os-release           subgid-
+console-setup                  issue            overlayroot.conf     subuid
+cron.d                         issue.net        pam.conf             subuid-
+cron.daily                     kernel           pam.d                sudoers
+cron.hourly                    kernel-img.conf  passwd               sudoers.d
+cron.monthly                   landscape        passwd-              sysctl.conf
+crontab                        ldap             perl                 sysctl.d
+cron.weekly                    ld.so.cache      pm                   systemd
+cryptsetup-initramfs           ld.so.conf       polkit-1             terminfo
+crypttab                       ld.so.conf.d     pollinate            timezone
+dbus-1                         legal            profile              tmpfiles.d
+debconf.conf                   libaudit.conf    profile.d            ucf.conf
+debian_version                 libnl-3          protocols            udev
+default                        locale.alias     python               ufw
+deluser.conf                   locale.gen       python2.7            updatedb.conf
+depmod.d                       localtime        python3              update-manager
+dhcp                           logcheck         python3.6            update-motd.d
+dnsmasq.d                      login.defs       rc0.d                update-notifier
+dnsmasq.d-available            logrotate.conf   rc1.d                vim
+dpkg                           logrotate.d      rc2.d                vmware-tools
+environment                    lsb-release      rc3.d                vtrgb
+ethertypes                     ltrace.conf      rc4.d                wgetrc
+fonts                          lvm              rc5.d                X11
+fstab                          machine-id       rc6.d                xdg
+fuse.conf                      magic            rcS.d
+gai.conf                       magic.mime       request-key.conf
+groff                          mailcap          request-key.d
+vagrant@aws:/etc$ cd ansible/
+vagrant@aws:/etc/ansible$ ls
+ansible.cfg  app.yml  db.yml  hosts  roles
+vagrant@aws:/etc/ansible$ sudo nano db.yml
+vagrant@aws:/etc/ansible$ ansible-playbook db.yml
+ERROR! We were unable to read either as JSON nor YAML, these are the errors we got from each:
+JSON: No JSON object could be decoded
+
+Syntax Error while loading YAML.
+  mapping values are not allowed in this context
+
+The error appears to be in '/etc/ansible/db.yml': line 44, column 13, but may
+be elsewhere in the file depending on the exact syntax problem.
+
+The offending line appears to be:
+
+  - name: Restart mongodb
+      become: true
+            ^ here
+vagrant@aws:/etc/ansible$ sudo nano db.yml
+vagrant@aws:/etc/ansible$ ansible-playbook db.yml
+
+PLAY [db] **********************************************************************************************************************
+
+TASK [Gathering Facts] *********************************************************************************************************
+[DEPRECATION WARNING]: Distribution Ubuntu 18.04 on host 192.168.33.11 should use /usr/bin/python3, but is using
+/usr/bin/python for backward compatibility with prior Ansible releases. A future Ansible release will default to using the
+discovered platform python for this host. See
+https://docs.ansible.com/ansible/2.9/reference_appendices/interpreter_discovery.html for more information. This feature will be
+ removed in version 2.12. Deprecation warnings can be disabled by setting deprecation_warnings=False in ansible.cfg.
+ok: [192.168.33.11]
+
+TASK [install mongodb] *********************************************************************************************************
+ok: [192.168.33.11]
+
+TASK [Remove mongodb file (delete file)] ***************************************************************************************
+changed: [192.168.33.11]
+
+TASK [Touch a file, using symbolic modes to set the permissions (equivalent to 0644)] ******************************************
+changed: [192.168.33.11]
+
+TASK [Insert multiple lines and Backup] ****************************************************************************************
+changed: [192.168.33.11]
+
+TASK [Restart mongodb] *********************************************************************************************************
+changed: [192.168.33.11]
+
+TASK [Enabling mongodb] ********************************************************************************************************
+changed: [192.168.33.11]
+
+TASK [Starting Mongodb] ********************************************************************************************************
+changed: [192.168.33.11]
+
+PLAY RECAP *********************************************************************************************************************
+192.168.33.11              : ok=8    changed=6    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+
+vagrant@aws:/etc/ansible$ ansible-playbook app.yml
+
+PLAY [web] *****************************************************************************************
+
+TASK [Gathering Facts] *****************************************************************************
+[DEPRECATION WARNING]: Distribution Ubuntu 18.04 on host 192.168.33.10 should use /usr/bin/python3,
+ but is using /usr/bin/python for backward compatibility with prior Ansible releases. A future
+Ansible release will default to using the discovered platform python for this host. See
+https://docs.ansible.com/ansible/2.9/reference_appendices/interpreter_discovery.html for more
+information. This feature will be removed in version 2.12. Deprecation warnings can be disabled by
+setting deprecation_warnings=False in ansible.cfg.
+ok: [192.168.33.10]
+
+TASK [Install nginx] *******************************************************************************
+ok: [192.168.33.10]
+
+TASK [nginx reverse proxy] *************************************************************************
+[WARNING]: Consider using 'become', 'become_method', and 'become_user' rather than running sudo
+changed: [192.168.33.10]
+
+TASK [Install nodejs] ******************************************************************************
+ok: [192.168.33.10]
+
+TASK [Install NPM] *********************************************************************************
+ok: [192.168.33.10]
+
+TASK [Install NPM modules] *************************************************************************
+changed: [192.168.33.10]
+
+TASK [Install pm2] *********************************************************************************
+ok: [192.168.33.10]
+
+TASK [set up app] **********************************************************************************
+changed: [192.168.33.10]
+
+PLAY RECAP *****************************************************************************************
+192.168.33.10              : ok=8    changed=3    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+
+vagrant@aws:/etc/ansible$ ansible-playbook app.yml
+
+PLAY [web] *****************************************************************************************
+
+TASK [Gathering Facts] *****************************************************************************
+^C [ERROR]: User interrupted execution
+vagrant@aws:/etc/ansible$ sudo nano app.yml
+vagrant@aws:/etc/ansible$ ansible-playbook app.yml
+
+PLAY [web] *****************************************************************************************
+
+TASK [Gathering Facts] *****************************************************************************
+[DEPRECATION WARNING]: Distribution Ubuntu 18.04 on host 192.168.33.10 should use /usr/bin/python3,
+ but is using /usr/bin/python for backward compatibility with prior Ansible releases. A future
+Ansible release will default to using the discovered platform python for this host. See
+https://docs.ansible.com/ansible/2.9/reference_appendices/interpreter_discovery.html for more
+information. This feature will be removed in version 2.12. Deprecation warnings can be disabled by
+setting deprecation_warnings=False in ansible.cfg.
+ok: [192.168.33.10]
+
+TASK [Install nginx] *******************************************************************************
+ok: [192.168.33.10]
+
+TASK [nginx reverse proxy] *************************************************************************
+[WARNING]: Consider using 'become', 'become_method', and 'become_user' rather than running sudo
+changed: [192.168.33.10]
+
+TASK [Install nodejs] ******************************************************************************
+ok: [192.168.33.10]
+
+TASK [Install NPM] *********************************************************************************
+ok: [192.168.33.10]
+
+TASK [Install NPM modules] *************************************************************************
+changed: [192.168.33.10]
+
+TASK [Install pm2] *********************************************************************************
+ok: [192.168.33.10]
+
+TASK [set up app] **********************************************************************************
+changed: [192.168.33.10]
+
+PLAY RECAP *****************************************************************************************
+192.168.33.10              : ok=8    changed=3    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+
+vagrant@aws:/etc/ansible$ sudo nano db.yml
+vagrant@aws:/etc/ansible$ tree
+.
+├── ansible.cfg
+├── app.yml
+├── db.yml
+├── hosts
+└── roles
+
+1 directory, 4 files
+vagrant@aws:/etc/ansible$ sudo nano main.yml
+vagrant@aws:/etc/ansible$ sudo nano main.yml
+vagrant@aws:/etc/ansible$ main
+-bash: main: command not found
+vagrant@aws:/etc/ansible$ tree
+.
+├── ansible.cfg
+├── app.yml
+├── db.yml
+├── hosts
+├── main.yml
+└── roles
+
+1 directory, 5 files
+vagrant@aws:/etc/ansible$ sudo nano main.yml
+
+  GNU nano 2.9.3                      main.yml
+
+            proxy_pass http://127.0.0.1:3000;
+        }
+      }" >> reverse-proxy.conf
+      sudo ln -s /etc/nginx/sites-available/reverse-proxy.conf /etc/nginx/site$
+      sudo service nginx restart
+  - name: Install nodejs
+    apt: pkg=nodejs state=present
+
+  - name: Install NPM
+    apt: pkg=npm state=present
+
+  - name: Install NPM modules
+    shell: |
+      npm install -g npm@latest
+      npm install mongoose -y
+
+# Downloading pm2
+  - name: Install pm2
+    npm:
+      name: pm2
+      global: yes
+
+
+  - name: Running the app
+    shell: |
+      cd app/
+      npm install
+      node seeds/seed.js
+      pm2 kill
+      pm2 start app.js
+    environment:
+      DB_HOST: mongodb://vagrant@192.168.33.11:27017/posts?authSource=admin
+

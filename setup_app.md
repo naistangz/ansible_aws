@@ -1,5 +1,7 @@
 # Setting up our APP and DB with Ansible Playbooks 
 
+## Running Ansible
+
 1. Navigate to the `ansible_demo` folder and create a `.yaml`/`.yml` file:
 ```bash
 nano app.yml
@@ -179,3 +181,51 @@ ansible-playbook app.yml
     state: restarted
     enabled: yes
 ```
+
+3. Create a script to automate configuring hosts and installing APT
+```bash
+#!/bin/bash
+
+# Run the virtual machine and SSH into the AWS machine as controller
+vagrant up
+vagrant ssh aws
+
+# Installing Linux packages 
+sudo apt-get update
+sudo apt-get install software-properties-common -y
+sudo apt-add-repository --yes --update ppa:ansible/ansible
+sudo apt-get install tree -y
+sudo apt-get install ansible -y
+
+# Installing ssh pass for Non-Interactive SSH login to other servers
+sudo apt-get install sshpass -y
+
+# Navigate to ansible folder to connect to other servers and define which servers it will be managing
+cd /etc/ansible/
+sudo nano hosts
+echo 
+"
+[web]
+192.168.33.10 ansible_connection=ssh ansible_ssh_user=vagrant ansible_ssh_pass=vagrant" >> hosts
+echo  
+"[db]
+192.168.33.11 ansible_connection=ssh ansible_ssh_user=vagrant ansible_ssh_pass=vagrant" >> hosts
+cd ..
+
+# Enter web server
+sshpass -p 'vagrant' ssh vagrant@192.168.33.10
+sudo apt-get update -y
+sudo apt-get upgrade -y
+
+# Enter DB server
+sshpass -p 'vagrant' ssh vagrant@192.168.33.11
+sudo apt-get update -y
+
+# Go back to AWS server, navigate to ansible folder and run yaml file
+ssh vagrant@192.168.33.12
+cd /etc/ansible
+ansible-playbook playbook.yml
+```
+
+4. Using `ansible vault` in playbooks to keep password in encrypted files
+5. 

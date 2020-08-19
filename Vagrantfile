@@ -59,6 +59,9 @@ Vagrant.configure("2") do |config|
     aws.vm.hostname = 'aws'
     
     aws.vm.network :private_network, ip: "192.168.33.12"
+
+    # syncing app folder to controller
+    aws.vm.synced_folder "app", "/home/vagrant/app"
     
     config.hostsupdater.aliases = ["development.aws"] 
 
