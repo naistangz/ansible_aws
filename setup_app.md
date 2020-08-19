@@ -1,11 +1,11 @@
-# Creating a playbook and syncing our app to the VM
+# Setting up our APP and DB with Ansible Playbooks 
 
 1. Navigate to the `ansible_demo` folder and create a `.yaml`/`.yml` file:
 ```bash
 nano app.yml
 ```
 
-2. Set out [commands](playbook.yml) to install dependencies such as nodejs and nginx then run the provision.sh file:
+2. Set out [commands](playbook.yml) to install dependencies such as nodejs and nginx then run the [provision.sh](provision.sh) file:
 ```bash
 ./provision.sh
 ```
