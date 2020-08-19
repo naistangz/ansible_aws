@@ -84,7 +84,7 @@ pm2 stop app.js
 ```bash
 nano db.yml
 ```
-2. Configure the `.yml` [file](db.yml)
+2. Configure the `.yml` [file](playbooks/db.yml)
 3. Securely copy new `db.yml` to AWS
 
 ```bash

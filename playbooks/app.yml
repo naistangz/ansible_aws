@@ -1,0 +1,112 @@
+---
+# where do we want to install
+- hosts: web
+
+# get the facts
+  gather_facts: yes
+
+# changes access to root user
+  become: true
+
+  tasks:
+  # Part I Installing Nginx and refreshing caches
+  - name: Install nginx from Apt-Get
+    become: yes
+    apt: pkg=nginx state=present update_cache=true
+
+  - name: Remove Nginx default file
+    file:
+      path: /etc/nginx/sites-enabled/default
+      state: absent
+
+  - name: Touch a file, using symbolic modes to set the permissions (equivalent to 0$
+    file:
+      path: /etc/nginx/sites-enabled/reverseproxy.conf
+      state: touch
+      mode: '666'
+
+
+  - name: Insert multiple lines and Backup
+    blockinfile:
+      path: /etc/nginx/sites-enabled/reverseproxy.conf
+      block: |
+        server{
+          listen 80;
+          server_name development.local;
+          location / {
+              proxy_pass http://127.0.0.1:3000;
+          }
+        }
+
+  - name: Creating symbolic link
+    become: yes
+    file:
+      path: /etc/nginx/sites-enabled/reverseproxy.conf
+        state: touch
+        mode: '666'
+
+
+  - name: Insert multiple lines and Backup
+    blockinfile:
+      path: /etc/nginx/sites-enabled/reverseproxy.conf
+      block: |
+        server{
+          listen 80;
+          server_name development.local;
+          location / {
+              proxy_pass http://127.0.0.1:3000;
+          }
+        }
+
+  - name: Creating symbolic link
+    become: yes
+    file:
+      src: /etc/nginx/sites-available/default
+      dest: /etc/nginx/sites-enabled/default
+      state: link
+      force: true
+
+  - name: Running and restarting NGINX service
+    become: yes
+    service:
+      name: nginx
+      state: restarted
+      enabled: yes
+
+  # Part II Installing Nodejs
+  - name: Install Nodejs
+    apt: pkg=nodejs state=present
+
+  - name: Install NPM
+    apt: pkg=npm state=present
+
+  - name: Install NPM modules
+    shell: |
+      npm install -g npm@latest
+      npm install mongoose -y
+
+
+  # Setting environment variable
+  - name: Setting env variable for seed.js DB_HOST
+    shell: echo 'export DB_HOST="mongodb://vagrant@192.168.33.11:27017/posts?authSou$
+
+  # Installing Pm2, a process management module for Node.js to monitor Node.js
+  # If the app goes down e.g node app.js process dies, process manager can restart t$
+  # Installing pm2 globally, so that all node.js applications on the web server can $
+  - name: Install pm2
+    npm:
+      name: pm2
+      global: yes
+
+
+  # Part III Running the app and using pm2 kill to stop any previous active instance$
+  - name: Running the app
+      shell: |
+        cd app/
+        npm install
+        node seeds/seed.js
+        pm2 kill
+        pm2 start app.js
+      environment:
+        DB_HOST: mongodb://vagrant@192.168.33.11:27017/posts?authSource=admin
+

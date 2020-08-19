@@ -1,0 +1,38 @@
+
+  # Part II Installing Nodejs
+  - name: Install Nodejs
+    apt: pkg=nodejs state=present
+
+  - name: Install NPM
+    apt: pkg=npm state=present
+
+  - name: Install NPM modules
+    shell: |
+      npm install -g npm@latest
+      npm install mongoose -y
+
+  # Setting environment variable
+  - name: Setting env variable for seed.js DB_HOST
+    shell: echo 'export DB_HOST="mongodb://vagrant@192.168.33.11:27017/posts?authSource=admin' >> ~/.bashrc
+
+  # Installing Pm2, a process management module for Node.js to monitor Node.js
+  # If the app goes down e.g node app.js process dies, process manager can restart the app
+  # Installing pm2 globally, so that all node.js applications on the web server can import and use installed packages
+  - name: Install pm2
+    npm:
+      name: pm2
+      global: yes
+
+
+  # Part III Running the app and using pm2 kill to stop any previous active instances before starting the app again
+  - name: Running the app
+      shell: |
+        cd app/
+        npm install
+        node seeds/seed.js
+        pm2 kill
+        pm2 start app.js
+      environment:
+        DB_HOST: mongodb://vagrant@192.168.33.11:27017/posts?authSource=admin
+
+
