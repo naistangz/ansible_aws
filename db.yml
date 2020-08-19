@@ -4,6 +4,7 @@
 
   gather_facts: yes
 
+  # Root user
   become: true
 
   tasks:
