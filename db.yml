@@ -7,22 +7,24 @@
   become: true
 
   tasks:
-  - name: install mongodb
+  - name: Installing MongoDB
     apt: pkg=mongodb state=present
 
-  - name: Remove mongodb file (delete file)
+  # Make sure state is absent
+  - name: Removing the Mongodb.conf
     file:
       path: /etc/mongodb.conf
       state: absent
 
-  - name: Touch a file, using symbolic modes to set the permissions (equivalent to 0644)
+
+  - name: Creating MongoDB file, granting read and write permissions
     file:
       path: /etc/mongodb.conf
       state: touch
       mode: u=rw,g=r,o=r
 
-
-  - name: Insert multiple lines and Backup
+  # Blockinfile module to insert text into specified file
+  - name: Setting MongoDB IP to port 27017
     blockinfile:
       path: /etc/mongodb.conf
       backup: yes
