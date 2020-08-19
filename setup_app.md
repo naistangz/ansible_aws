@@ -71,6 +71,16 @@ pm2 killall
 ```
 ---
 
+## Setting up DB Enabling /posts 
+1. Create another `.yaml` file called `playbook_db.yml`:
+```bash
+nano playbook_db.yml
+```
+2. 
+
+
+
+---
 
 ## Next iteration
 1. Copy app folder without using `scp` and including it in the `.yaml` file.

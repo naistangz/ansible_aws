@@ -1,3 +1,4 @@
+  
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
@@ -47,6 +48,7 @@ Vagrant.configure("2") do |config|
     db.vm.network :private_network, ip: "192.168.33.11"
     
     config.hostsupdater.aliases = ["development.db"]     
+
     end
 
 # creating third VM called aws 
@@ -57,7 +59,8 @@ Vagrant.configure("2") do |config|
     aws.vm.hostname = 'aws'
     
     aws.vm.network :private_network, ip: "192.168.33.12"
-    aws.vm.synced_folder "app", "home/vagrant/app"    
+    
     config.hostsupdater.aliases = ["development.aws"] 
+
    end
 end
