@@ -1,0 +1,14 @@
+---
+- hosts: local
+  connection: local
+  gather_facts: False
+  vars:
+    instance_type: t2.micro
+    security_group: Eng67.Anais.Ansible.SG
+    image: ami-08617e0e0b2d50721
+    keypair: Eng67.Anais.key
+    region: eu-west-1b
+    count: 1
+
+  vars_files:
+    - aws_keys.yml

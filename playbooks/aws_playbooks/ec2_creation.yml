@@ -1,0 +1,30 @@
+---
+- name: Provisioning an EC2 Instance
+  hosts: aws
+  gather_facts: True
+
+ # creating variables
+  vars:
+    # key pair name must be identical to key pair name in ec2 key pair table
+    keypair: Eng67.Anais.key
+    region: eu-west-1b
+    image: ami-08617e0e0b2d50721
+    instance_type: t2.micro
+
+
+  tasks:
+    - name: Launching EC2 Instance
+      # ansible ec2 module
+      ec2:
+        key_name: "{{ keypair }}"
+        group: default
+        instance_type: "{{ instance_type }}"
+        image: "{{ image }}"
+        # wait for the instance to reach its desired state before returning
+        wait: true
+        region: "{{ region }}"
+        aws_access_key: "{{ ec2_access_key }}"
+        aws_secret_key: "{{ ec2_secret_key }}"
+      register: ec2
+    - name: Print all ec2 variables
+      debug: var=ec2
