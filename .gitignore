@@ -2,3 +2,4 @@
 .idea/
 .vagrant/machines/app/virtualbox/private_key
 .vagrant/machines/db/virtualbox/private_key
+.vagrant/machines/web/virtualbox/private_key
