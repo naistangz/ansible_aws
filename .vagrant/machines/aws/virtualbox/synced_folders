@@ -1,1 +1,0 @@
-{"virtualbox":{"/home/vagrant/app":{"guestpath":"/home/vagrant/app","hostpath":"/Users/anaistang/PycharmProjects/ansible_ami/app","disabled":false,"__vagrantfile":true},"/vagrant":{"guestpath":"/vagrant","hostpath":"/Users/anaistang/PycharmProjects/ansible_ami","disabled":false,"__vagrantfile":true}}}

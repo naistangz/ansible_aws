@@ -1,1 +1,0 @@
-{"dependencies":[["vagrant-berkshelf",["= 5.1.2"]],["vagrant-hostsupdater",["= 1.1.1.160"]]],"checksum":"697a65222ba314f03c191bca28b5b591631a64ec7cb9cfb414e9303c3c045ddc","vagrant_version":"2.2.9"}
